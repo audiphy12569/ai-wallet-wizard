@@ -1,0 +1,45 @@
+# Web3 AI Assistant API Keys Reference
+# IMPORTANT: DO NOT create a .env file with these values!
+# Instead, use either Supabase secrets management or user input forms.
+
+# Required API Keys:
+
+1. OPENAI_API_KEY
+   - Get from: https://platform.openai.com/account/api-keys
+   - Used for: AI responses in the chat interface
+
+2. ALCHEMY_API_KEY
+   - Get from: https://dashboard.alchemy.com/
+   - Network: Sepolia
+   - Used for: 
+     * Fetching wallet balances
+     * Getting transaction details
+     * Retrieving gas fees
+     * Last 5 transactions history
+
+3. ETHERSCAN_API_KEY
+   - Get from: https://etherscan.io/apis
+   - Used for:
+     * Detailed transaction information
+     * Token contract verification
+     * Historical transaction data
+
+4. DEFILAMA_API
+   - Note: No API key needed
+   - Used for:
+     * Token prices
+     * TVL (Total Value Locked) data
+     * 24h trading volumes
+
+# Important Security Notes:
+- NEVER share these API keys or commit them to your repository
+- NEVER store these keys directly in your frontend code
+- Use Supabase secrets management (recommended) or user input forms
+- Always use the Sepolia testnet for development
+
+# Network Configuration:
+- Network: Sepolia Testnet
+- Chain ID: 11155111
+- RPC URL: Available through your Alchemy dashboard
+
+For implementation help, refer to the project documentation or ask the AI assistant.

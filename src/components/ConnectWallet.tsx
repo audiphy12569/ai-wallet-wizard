@@ -1,11 +1,33 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
 
 export const ConnectWallet = () => {
   const [isConnecting, setIsConnecting] = useState(false);
   const [isConnected, setIsConnected] = useState(false);
   const [address, setAddress] = useState("");
+  const { toast } = useToast();
+
+  useEffect(() => {
+    const checkConnection = async () => {
+      if (typeof window.ethereum !== "undefined") {
+        try {
+          const accounts = await window.ethereum.request({
+            method: "eth_accounts",
+          });
+          if (accounts.length > 0) {
+            setAddress(accounts[0]);
+            setIsConnected(true);
+          }
+        } catch (error) {
+          console.error("Error checking connection:", error);
+        }
+      }
+    };
+
+    checkConnection();
+  }, []);
 
   const connectWallet = async () => {
     setIsConnecting(true);
@@ -16,11 +38,24 @@ export const ConnectWallet = () => {
         });
         setAddress(accounts[0]);
         setIsConnected(true);
+        toast({
+          title: "Wallet Connected",
+          description: "Your wallet has been successfully connected!",
+        });
       } else {
-        alert("Please install MetaMask!");
+        toast({
+          title: "MetaMask Required",
+          description: "Please install MetaMask to connect your wallet.",
+          variant: "destructive",
+        });
       }
     } catch (error) {
       console.error("Error connecting wallet:", error);
+      toast({
+        title: "Connection Failed",
+        description: "Failed to connect wallet. Please try again.",
+        variant: "destructive",
+      });
     }
     setIsConnecting(false);
   };
